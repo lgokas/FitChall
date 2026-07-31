@@ -1,9 +1,8 @@
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 #include <iostream>
-#include <fstream>
-#include <sstream>
 #include <string>
+#include <fstream>
 
 void framebuffer_size_callback(GLFWwindow *window, int width, int height);
 void processInput(GLFWwindow *window);
@@ -12,36 +11,27 @@ void processInput(GLFWwindow *window);
 const unsigned int SCR_WIDTH = 800;
 const unsigned int SCR_HEIGHT = 600;
 
-// const char *vertexShaderSource = "#version 330 core\n"
-//                                  "layout (location = 0) in vec3 aPos;\n"
-//                                  "void main()\n"
-//                                  "{\n"
-//                                  "   gl_Position = vec4(aPos.x, aPos.y, aPos.z, 1.0);\n"
-//                                  "}\0";
-// const char *fragmentShaderSource = "#version 330 core\n"
-//                                    "out vec4 FragColor;\n"
-//                                    "void main()\n"
-//                                    "{\n"
-//                                    "   FragColor = vec4(1.0f, 1.0f, 0.2f, 1.0f);\n"
-//                                    "}\n\0";
+std::string readFile(const char *filePath)
+{
+    std::string content;
+    std::ifstream fileStream(filePath, std::ios::in);
+    std::string line = "";
+    while (!fileStream.eof())
+    {
+        std::getline(fileStream, line);
+        content.append(line + "\n");
+    }
+    fileStream.close();
+    return content;
+}
 
 int main()
 {
-    std::string vertex_shader_path = "../shaders/vertex_shader.glsl";
-    std::ifstream file(vertex_shader_path);
-    std::ostringstream vertex_shader_content;
-    vertex_shader_content << file.rdbuf();
-    std::cout << "Full file content:\n"
-              << vertex_shader_content.str() << std::endl;
-    const char *vertexShaderSource = vertex_shader_content.str().c_str();
 
-    std::string fragment_shader_path = "../shaders/fragment_shader.glsl";
-    std::ifstream fragment_file(fragment_shader_path);
-    std::ostringstream fragment_shader_content;
-    fragment_shader_content << fragment_file.rdbuf();
-    std::cout << "Full file content:\n"
-              << fragment_shader_content.str() << std::endl;
-    const char *fragmentShaderSource = fragment_shader_content.str().c_str();
+    std::string vertShaderStr = readFile("../shaders/vertex_shader.glsl");
+    std::string fragShaderStr = readFile("../shaders/fragment_shader.glsl");
+    const char *vertexShaderSource = vertShaderStr.c_str();
+    const char *fragmentShaderSource = fragShaderStr.c_str();
 
     glfwInit();
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
