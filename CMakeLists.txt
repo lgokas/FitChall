@@ -21,5 +21,6 @@ find_package(OpenGL REQUIRED)
 add_library(glad STATIC external/glad/src/glad.c)
 target_include_directories(glad PUBLIC external/glad/include)
 
-add_executable(FitChall src/main.cpp)
+add_executable(FitChall src/main.cpp src/ShadersUtil.cpp)
+target_include_directories(FitChall PRIVATE include)
 target_link_libraries(FitChall PRIVATE glad glfw OpenGL::GL)

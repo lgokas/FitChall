@@ -3,6 +3,7 @@
 #include <iostream>
 #include <string>
 #include <fstream>
+#include "ShadersUtil.h"
 
 void framebuffer_size_callback(GLFWwindow *window, int width, int height);
 void processInput(GLFWwindow *window);
@@ -27,6 +28,8 @@ std::string readFile(const char *filePath)
 
 int main()
 {
+    Shader shader;
+    shader.test_print();
 
     std::string vertShaderStr = readFile("../shaders/vertex_shader.glsl");
     std::string fragShaderStr = readFile("../shaders/fragment_shader.glsl");
