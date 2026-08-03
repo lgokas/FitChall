@@ -2,7 +2,6 @@
 #include <GLFW/glfw3.h>
 #include <iostream>
 #include <string>
-#include <fstream>
 #include "ShadersUtil.h"
 
 void framebuffer_size_callback(GLFWwindow *window, int width, int height);
@@ -12,27 +11,13 @@ void processInput(GLFWwindow *window);
 const unsigned int SCR_WIDTH = 800;
 const unsigned int SCR_HEIGHT = 600;
 
-std::string readFile(const char *filePath)
-{
-    std::string content;
-    std::ifstream fileStream(filePath, std::ios::in);
-    std::string line = "";
-    while (!fileStream.eof())
-    {
-        std::getline(fileStream, line);
-        content.append(line + "\n");
-    }
-    fileStream.close();
-    return content;
-}
-
 int main()
 {
     Shader shader;
     shader.test_print();
 
-    std::string vertShaderStr = readFile("../shaders/vertex_shader.glsl");
-    std::string fragShaderStr = readFile("../shaders/fragment_shader.glsl");
+    std::string vertShaderStr = shader.readFile("../shaders/vertex_shader.glsl");
+    std::string fragShaderStr = shader.readFile("../shaders/fragment_shader.glsl");
     const char *vertexShaderSource = vertShaderStr.c_str();
     const char *fragmentShaderSource = fragShaderStr.c_str();
 
