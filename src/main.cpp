@@ -13,14 +13,6 @@ const unsigned int SCR_HEIGHT = 600;
 
 int main()
 {
-    Shader shader;
-    shader.test_print();
-
-    std::string vertShaderStr = shader.readFile("../shaders/vertex_shader.glsl");
-    std::string fragShaderStr = shader.readFile("../shaders/fragment_shader.glsl");
-    const char *vertexShaderSource = vertShaderStr.c_str();
-    const char *fragmentShaderSource = fragShaderStr.c_str();
-
     glfwInit();
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
@@ -41,6 +33,14 @@ int main()
         std::cout << "Failed to initialize GLAD" << std::endl;
         return -1;
     }
+
+    Shader shader;
+    shader.test_print();
+
+    std::string vertShaderStr = shader.readFile("../shaders/vertex_shader.glsl");
+    std::string fragShaderStr = shader.readFile("../shaders/fragment_shader.glsl");
+    const char *vertexShaderSource = vertShaderStr.c_str();
+    const char *fragmentShaderSource = fragShaderStr.c_str();
 
     unsigned int vertexShader = glCreateShader(GL_VERTEX_SHADER);
     glShaderSource(vertexShader, 1, &vertexShaderSource, NULL);
@@ -130,8 +130,12 @@ int main()
 
 void processInput(GLFWwindow *window)
 {
-    if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
+    if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS ||
+        glfwGetKey(window, GLFW_KEY_ENTER) == GLFW_PRESS ||
+        glfwGetKey(window, GLFW_KEY_KP_ENTER) == GLFW_PRESS)
+    {
         glfwSetWindowShouldClose(window, true);
+    }
 }
 
 // glfw: whenever the window size changed (by OS or user resize) this callback function executes
